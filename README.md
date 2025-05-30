@@ -87,6 +87,64 @@ A: The system uses Next.js for the frontend and Django REST Framework for the ba
 Q: Can I clear the input field?
 A: Yes, click the CLEAR button to reset the question and answer fields.
 
+## API Documentation
+
+### Base URL
+
+
+---
+
+### Endpoints
+
+#### 1. Get Documents
+- **URL:** `/documents/`
+- **Method:** GET
+- **Description:** Fetches a list of uploaded documents.
+- **Response:**
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Document Title",
+      "uploaded_at": "2025-05-30T12:00:00Z",
+      "pages": 5
+    },
+    ...
+  ]
+
+URL: /documents/upload/
+
+Method: POST
+
+Description: Uploads a new document file.
+
+Request: FormData with file field named file.
+
+Response:
+    {
+    "id": 2,
+    "title": "Uploaded Document Title",
+    "uploaded_at": "2025-05-30T12:30:00Z",
+    "pages": 10
+    }
+
+URL: /query/
+
+Method: POST
+
+Description: Send a question to get an answer based on uploaded documents.
+
+Request Body:
+
+{
+  "question": "What is the capital of France?"
+}
+Response:
+
+{
+  "answer": "The capital of France is Paris."
+}
+
 ## Learn More
 
 
