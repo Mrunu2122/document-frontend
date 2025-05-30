@@ -1,12 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { queryAnswer } from "../../../lib/api";
 
 export default function QAPage() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [latency, setLatency] = useState(null);
+
+  // Set latency only on client after hydration
+  useEffect(() => {
+    setLatency(Math.random().toFixed(2));
+  }, []);
 
   const handleAsk = async () => {
     if (!question.trim()) return;
@@ -19,12 +25,15 @@ export default function QAPage() {
       console.error(err);
     } finally {
       setLoading(false);
+      // Update latency when answer is received (optional)
+      setLatency(Math.random().toFixed(2));
     }
   };
 
   const handleClear = () => {
     setQuestion("");
     setAnswer("");
+    setLatency(null);
   };
 
   return (
@@ -49,7 +58,9 @@ export default function QAPage() {
           <div className="w-full h-32 overflow-y-auto p-3 border rounded bg-gray-50">
             {loading ? "⏳ Loading..." : answer}
           </div>
-          <p className="text-xs text-right text-gray-400 mt-2">Latency: ~{Math.random().toFixed(2)}s</p>
+          <p className="text-xs text-right text-gray-400 mt-2">
+            Latency: ~{latency === null ? "—" : latency}s
+          </p>
         </div>
       </div>
 
